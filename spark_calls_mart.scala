@@ -21,12 +21,12 @@ object spark_calls_mart extends App {
     .coalesce(1)
     .write
     .mode("append")
-    .option("path", "hdfs://ns-etl/warehouse/tablespace/external/hive/etl_stg.db/call_stats_olch")
+    .option("path", "hdfs://ns-etl/warehouse/tablespace/external/hive/etl_stg.db/call_stats_iv")
     .format("parquet")
     .saveAsTable("etl_stg.call_stats_olch")
 
   val datamartDf = spark
-    .table("etl_stg.call_stats_olch")
+    .table("etl_stg.call_stats_iv")
     .select("state", "total_day_calls", "total_day_minutes")
 
   datamartDf.groupBy("state")
@@ -38,9 +38,9 @@ object spark_calls_mart extends App {
     .coalesce(1)
     .write
     .mode("append")
-    .option("path", "hdfs://ns-etl/warehouse/tablespace/external/hive/etl_stg.db/call_stats_mart_olch")
+    .option("path", "hdfs://ns-etl/warehouse/tablespace/external/hive/etl_stg.db/call_stats_mart_iv")
     .format("parquet")
-    .saveAsTable("etl_stg.call_stats_mart_olch")
+    .saveAsTable("etl_stg.call_stats_mart_iv")
 
 }
 
